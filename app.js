@@ -7,8 +7,8 @@ import {
 } from './js/constants.js';
 import { formatDate, escapeHtml as htmlEscape, normalizeExerciseName as normExerciseName, capitalize as capText } from './js/utils.js';
 import { RoutinesManager } from './js/features/routines.js';
-import { NutritionManager } from './js/features/nutrition.js?v=20260719-20';
-import { HistoryManager, getDayMuscleColors } from './js/features/history.js?v=20260719-20';
+import { NutritionManager } from './js/features/nutrition.js?v=20260719-21';
+import { HistoryManager, getDayMuscleColors } from './js/features/history.js?v=20260719-21';
 import { AdvancedStatsManager } from './js/features/stats-advanced.js';
 import { ExerciseSearchManager } from './js/features/exercise-search.js';
 

@@ -2492,7 +2492,21 @@ export class FitTrackApp {
 
     // ==================== MÉTODO BILBO ====================
     getBilboDefaults() {
-        return { configured: false, exercise: 'Press de Banca', startWeight: 20, currentWeight: 20, increment: 1, minReps: 8, maxReps: 12, tier: 1, sessions: [] };
+        return { configured: false, exercise: 'Press de Banca', startWeight: 20, currentWeight: 20, minReps: 8, maxReps: 12, tier: 1, sessions: [] };
+    }
+
+    getNextBilboWeight(weight) {
+        // Pesos habituales con discos de 1,5 kg: ... 30, 33, 35, 38, 40 ...
+        // Así se alternan subidas de 3 y 2 kg, sin proponer decimales.
+        const current = Math.max(1, Math.round(Number(weight) || 0));
+        const allowedRemainders = [0, 3, 5, 8];
+        let next = current + 1;
+
+        while (!allowedRemainders.includes(((next % 10) + 10) % 10)) {
+            next++;
+        }
+
+        return next;
     }
 
     normalizeBilboData(rawData) {
@@ -2500,7 +2514,6 @@ export class FitTrackApp {
         const data = rawData && typeof rawData === 'object' ? { ...defaults, ...rawData } : defaults;
         data.startWeight = Math.max(1, Math.round(Number(data.startWeight) || defaults.startWeight));
         data.currentWeight = Math.max(1, Math.round(Number(data.currentWeight) || data.startWeight));
-        data.increment = 1;
         data.sessions = Array.isArray(data.sessions) ? data.sessions.map(session => ({ ...session, weight: Math.round(Number(session.weight) || data.currentWeight) })) : [];
         return data;
     }
@@ -2580,7 +2593,7 @@ export class FitTrackApp {
 
         // Progression logic
         if (reps >= d.maxReps) {
-            d.currentWeight = Math.round(d.currentWeight + 1);
+            d.currentWeight = this.getNextBilboWeight(d.currentWeight);
             d.tier++;
             alert(`¡Excelente! Has completado ${reps} reps. Subes a ${d.currentWeight} kg 🎉`);
         } else if (reps < d.minReps) {

@@ -1,9 +1,0 @@
-{
-  "name": "FamilyGYM",
-  "short_name": "FamilyGYM",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#f3f8f8",
-  "theme_color": "#0f9f90",
-  "description": "Tu espacio familiar de entrenamiento."
-}
